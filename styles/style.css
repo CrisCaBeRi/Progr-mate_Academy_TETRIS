@@ -1,0 +1,42 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.score_table {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.box_name {
+    background-color: black;
+    color: white;
+}
+
+.box_name  span {
+    font-size: 65px;
+}
+
+
+.box_name span:nth-child(1){
+    color: aqua;
+    
+}
+.box_name span:nth-child(2){
+    color: red;
+}
+.box_name span:nth-child(3){
+    color: blue;
+}
+.box_name span:nth-child(4){
+    color: green;
+}
+.box_name span:nth-child(5){
+    color: yellow;
+}
+.box_name span:nth-child(6){
+    color: magenta;
+}

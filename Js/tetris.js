@@ -7,14 +7,19 @@ let dropCounter= 0; //variable para regular la caída de la ficha
 const CANVAS = document.getElementById("tetris"); /* paso 3: se trae el canvas de html */
 const CONTEXT = CANVAS.getContext("2d"); /* paso 4: Se crea una variable que establezca la visualización del canvas en 2d  */
 
+const canvasNext = document.getElementById("nextPiece");
+const contextNext = canvasNext.getContext("2d");
+
 const grid = createMatriz(10,20);/*Variable // funciona aninima para crear una tabla de 20 filas por 10 columnas -- se utilizan los valores de create matriz 10,20 como parametro en la funcion createMatriz */
 
+const color1= "rgb(255,255,0)"; // TODO DEFINIR COLORES DE LAS DEMAS PIEZAS 
+
 const colors = [ // variable para definir los colores, después se cita en draw matriz 
-    null, 
-    'red',
-    'blue',
-    'violet',
-    'green',
+    null, //Ya que el 0 esta reservado a las posiciones nulas de la tabla, se asigna valor null a 0  
+    color1,
+    color1,
+    color1,
+    color1,
     'purple',
     'orange',
     'pink'
@@ -22,12 +27,17 @@ const colors = [ // variable para definir los colores, después se cita en draw 
 
 const player ={/*objeto llave y valor  pos abarca la posicion donde se ubica el tetromino*/
     pos: {x:0, y:0},
-    matriz: null, //al comienzo se creaba la ficha aqui, pero cuand ose integran las demas, se almacenan en la función createPiece
-    score:0
-    
+    matriz: null, //al comienzo se creaba la ficha aqui, pero cuando se integran las demás, se almacenan en la función createPiece
+    next:null,
+    score:0,
+    level:0,
+    lines:0   
 };
 
 CONTEXT.scale(25,25); /*paso 5: Se establecen las dimensiones del tablero canvas teniendo en cuenta el height y el weight del html  */
+
+contextNext.scale (19,19); // Escala del canvas para la visualización de la siguiente ficha que va a salir. 
+
 
 function createPiece (tipo){
     if(tipo==='T') {
@@ -87,6 +97,8 @@ function createMatriz (width,height){/*se crea una funcion que trae como paramet
 }
 /*recibe el grid por l matriz y el player tiene la matriz de lka ficha */
 
+
+
 function collide (grid, player){ //funcion para limitar los movimientos dentro del canvas para que las figuras no superen los limites INFERIORES
 
     const matriz = player.matriz; //Variable definida para obtener la ruta de acceso directo a la lisya del objeto
@@ -104,7 +116,7 @@ function collide (grid, player){ //funcion para limitar los movimientos dentro d
     return false; //retorna que no hay colision 
 }
 
-function merge (grid,player) {
+function merge (grid,player) { //funcion creada para que ua ficha no pase por encima de otra sino que se agrupen
     player.matriz.forEach((row, y) => {
         row.forEach((value, x) => {
             if (value!==0) {
@@ -113,8 +125,6 @@ function merge (grid,player) {
         });
     });      
 }
-
-
 
 function drawMatriz (matriz, offset) {/*Esta funcion trabaja con los parametros definidos dentro de la funcion draw  */
     /*array function funciona para abreviar la declaracion de una funcion y no poner las palabras reservadas de de las funciones como el function o el return*/
@@ -130,38 +140,63 @@ function drawMatriz (matriz, offset) {/*Esta funcion trabaja con los parametros 
             }
         });
     });
-}     
-        
+}  
+
+function drawMatrizNext (matriz, offset) {//funcion para dibujar la matriz pequeña de la ficha siguiente
+    contextNext.fillStyle = "#000", //todo revisar color 
+    contextNext.fillRect(0,0, canvasNext.width, canvasNext.height),
+
+    matriz.forEach((row, y) => { 
+        row.forEach((value, x) => { 
+            if(value!==0){
+                contextNext.fillStyle = colors[value];
+                contextNext.fillRect (x + offset.x, y + offset.y, 1, 1 ); 
+            }
+        });
+    });
+}        
         
 function draw () { /*Se crea la función draw que va a ser llamada dentro de update para no saturar la función update con demasiada información  */
-    CONTEXT.fillStyle ="#000"; 
+    CONTEXT.fillStyle ="#000";    
 
     CONTEXT.fillRect(0, 0, CANVAS.width , CANVAS.height);
     drawMatriz (grid, {x:0, y:0});    
     drawMatriz (player.matriz, player.pos);
+
+    drawMatrizNext(player.next, {x:1, y:1});
 }
 
 function gridSweep () {//Funcion que elimina las lineas completadas 
-    let rowCount = 1;
-    let pruebaStiven = false;
-
-
-
-
-
-    stiven: for (let y = grid.length -1; y >0; --y){
+    
+    
+    outer: for (let y = grid.length -1; y >0; --y){
 
             for (let x = 0; x < grid [y].length; ++x){
                 
                 if (grid [y][x]===0){
-                    continue stiven;
+                    continue outer; //label para ciclos, funciona para recorrer constantemente un posición 
                 }                
             }
-            const row = grid.splice (y,1).fill (0);
-            grid.unshift(row);
-            ++y;
-            player.score += rowCount *10;
+            const row = grid.splice(y,1)[0].fill(0); // splice es un metodo de los arrays para verificar todas las posiciones de Y en 1, después .fill se encarga de cambiar esos 1 en 0. 
+            grid.unshift(row);//una vez la posición este en 0, unshift borra todo el row o fila correspondiente 
+            ++y;// como se borra la fila, se debe crear otra encima 
+            player.score += 1*10; // y cada vez que se borre, se opera el contador *10 
+            
+            player.lines ++;
+
+           /*  rowCount *= 2; */ //todo revisar el uso de esta variable 
+            
+            if (player.lines % 3===0){
+                player.level++;
+            }    
+
         }
+}
+
+function updateScore () {
+    document.getElementById("score").innerHTML = player.score;
+    document.getElementById("level").innerHTML = player.level;
+    document.getElementById("lines").innerHTML = player.lines;
 }
 
 function update(time = 0) {/*paso 8: Se crea una función que se ejecute para inicializar el juego */
@@ -186,12 +221,9 @@ function playerDrop(){
         player.pos.y--; //contador en negativo para que la ficha baje automática. 
         
         merge(grid, player); //llama funcion con los parametros de posicion d ejugador y ficha
-        
         playerReset(); //funcion creada para lanzar una nueva ficha 
-
         gridSweep ();
-
-        
+        updateScore();      
 
     }
 
@@ -199,24 +231,35 @@ function playerDrop(){
 }
 
 function playerReset () { //funcion creada para enviar un nueva ficha cuando la anterior colisiona 
-    const pieces = 'IJLOSZT'
 
-    player.matriz = createPiece(pieces [Math.floor(Math.random() * pieces.length)])
+    const pieces = 'IJLOSZT';
 
-    /* player.matriz = createPiece (pieces[pieces.length * Math.random() | 0]); */
+    dropInterval = 1000 - (player.level*100); //cambio del intervalo de tiempo cada vez que se suba el nivel 
+    
+    if (player.next === null){
 
+        player.matriz = createPiece(pieces [Math.floor(Math.random() * 6)])
+    } else {
+        player.matriz = player.next;
+    }
 
-    player.pos.x = Math.floor(grid[0].length/3)
-
-    /* player.pos.x = (grid[0].length /2 |0) - (player.matriz[0].length/2|0); */
+    player.next = createPiece(pieces [Math.floor(Math.random() * 6)]); //ficha aleatoria generada por funciones. Al final se multiplica por 6 ya que es el numero de fichas que contiene la lista
+    player.pos.x = Math.floor(grid[0].length/3);    
 
     player.pos.y = 0;
-}
 
-function updateScore () {
-    document.getElementById("score").innerHTML = player.score;
+    
+    if (collide(grid,player)){//todo qué funcionalidad se necesita para que salga un alert y seleccione si desea continuar
+        //cuando pierde 
+        alert ("has perdido");
+        
+        grid.forEach(row => row.fill(0));
+        player.score =0;
+        player.level = 0;
+        player.lines = 0;
+        updateScore();      
+    }
 }
-
 
 
 function playerMove (direction){ //se limita el movimiento 
@@ -269,8 +312,10 @@ document.addEventListener("keydown", event => {
 });
 
 playerReset();
+updateScore (); 
+
 
 update();
-updateScore ();
+
 
 
