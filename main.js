@@ -1,7 +1,7 @@
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 var vertical=24, horizontal=24;
-//tiene en cuenta el tamaño pedido en los requerimientos
+//Crea la matriz de fondo pedida en los requerimientos
 var tamanocuadro = 40;
 for(let i=0;i<360;i+=horizontal){
     for(let j=0;j<600;j+=vertical){
@@ -23,7 +23,9 @@ var pos=[
     [tamanocuadro,-tamanocuadro],
     [0,-2*tamanocuadro]
 ];
-//Piezas construidas a partir de la base pos
+//Una entrada de este arreglo corresponde a la definición del numero de giros posible (4,3,2,1)
+//y el resto de posiciones de cada array de entrada se refiere a cada uno de los bloques 
+//que constituyen dicha pieza característica siendo el número una posición de un bloque en el arreglo pos. 
 var piezas=[
     [4,0,1,2,3], 
     [4,0,1,5,6],  
@@ -36,10 +38,14 @@ var piezas=[
 var x=0;
 var y=0;
 //creación de pieza t hacia abajo
-function dibujarBloque(){
+var nRandom;
+function getRandomArbitrary() {
+    nRandom=Math.floor(Math.random()*7);
+};
+function dibujarBloque(bloqueRandom){
     for(i=1;i<5;i++){
         ctx.beginPath();
-        ctx.rect(pos[piezas[0][i]][0]+tamanocuadro, pos[piezas[0][i]][1]+y, tamanocuadro, tamanocuadro);
+        ctx.rect(pos[piezas[bloqueRandom][i]][0]+tamanocuadro, pos[piezas[bloqueRandom][i]][1]+y, tamanocuadro, tamanocuadro);
         ctx.fillStyle = "#FF0000";
         ctx.strokeStyle = "rgba(0,0,0, 1)";
         ctx.stroke();
@@ -51,7 +57,8 @@ function dibujarBloque(){
 }
 function dibujar(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    dibujarBloque();
+    getRandomArbitrary();
+    dibujarBloque(nRandom);
 for(let i=0;i<360;i+=horizontal){
     for(let j=0;j<600;j+=vertical){
         ctx.beginPath();
@@ -64,7 +71,7 @@ for(let i=0;i<360;i+=horizontal){
 {
     ctx.clearRect(0,0,canvas.width,canvas.height);
     y=y-tamanocuadro*2;
-    dibujarBloque();
+    dibujarBloque(nRandom);
     clearInterval(movimiento);
 }
 }
