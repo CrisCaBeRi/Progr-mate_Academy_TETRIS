@@ -229,7 +229,7 @@ function playerDrop(){
         player.pos.y--; //contador en negativo para que la ficha baje automática. 
         merge(grid, player); //llama funcion con los parametros de posicion d ejugador y ficha
         
-        /* playerReset(); */ //funcion creada para lanzar una nueva ficha
+        // playerReset(); //funcion creada para lanzar una nueva ficha
         gridSweep ();
         updateScore();      
     }
