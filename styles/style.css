@@ -1,25 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    box-sizing: border-box; 
+    font-family: 'VT323', monospace; 
 }
 
-.score_table {
+body {
+    background: linear-gradient(90deg, rgba(255,0,159,1) 0%, rgba(0,112,255,1) 100%);
+    /* overflow-y: hidden; */ /*Bloquear overflow*/
+}
+
+.main_table {   
+    margin-top: 40px;
+    justify-content: space-around;
+    display: flex;     
+    width: 100%;  
+    font-size: 20px;     
+}
+
+.next_piece {
+    border: 2px solid black;
+    border-radius: 15px;
+    padding: 0px 10px ;   
+    height: 250px;
+    color: white; 
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    align-items: center;     
+}
+
+
+#tetris {
+    border-right: 10px solid grey;
+    border-left: 10px solid grey; ;
+    
+    
 }
 
 .box_name {
-    background-color: black;
-    color: white;
+    width: 320px;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;  
+    background-color: white;   
+    color: black;
+    /* padding-bottom: 15px; */
+    font-weight: bold;    
 }
 
 .box_name  span {
-    font-size: 65px;
+    font-size: 80px;
+    font-weight: bold;
 }
-
 
 .box_name span:nth-child(1){
     color: aqua;
@@ -39,4 +73,86 @@
 }
 .box_name span:nth-child(6){
     color: magenta;
+}
+
+.score_table {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;    
+    align-items: center;  
+    color: white;  
+}
+
+.arrows button {  
+    border-radius: 10%; 
+}
+
+
+#score, #lines, #level {    
+    font-size: 50px;
+}
+
+.controls {
+    color: black;
+}
+
+.arrows {    
+    display: grid; 
+    /* justify-items: center;/*toma los elementos contenidos y los centra*/
+    /*  align-items: center; */ 
+   place-items: center;
+
+    grid-template-columns: repeat(3,100px);
+    grid-template-rows: repeat(2,100px);
+    
+}
+
+.arrow_up {
+    /* grid-area:1/2/2/3 ; */ /*inicio fila, inicio columna, fin fila, fin columna */
+    grid-column: 2/3; 
+} 
+
+.arrow_left {
+    grid-column:1/2 ;
+    grid-row: 2/3;   
+}
+
+.arrow_down {
+    grid-column: 2/3;
+    grid-row: 2/2;
+}
+
+.arrow_right {
+    grid-column: 3/3;
+    grid-row: 2/2;
+}
+
+
+
+/* #score::before{
+    content: "site";
+    margin-right: 150px;
+} */
+
+
+@media screen and (max-width: 860px){
+    
+    
+    .box_name {
+        width: 100px;
+        height: 150px;
+        display: flex;
+        flex-direction: column; 
+        align-items: center;           
+    }
+
+    #nextPiece {
+        width: 50px;
+        height: 50px;
+    }
+
+    #tetris {
+        width: 100px;
+        height: 200px;
+    }   
 }

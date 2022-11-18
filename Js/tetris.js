@@ -4,6 +4,11 @@ let dropInterval = 1000;//variable para regular la caída de la ficha
 let dropCounter= 0; //variable para regular la caída de la ficha
 
 
+let movLeft = document.getElementById("arrowLeft");
+let movRight = document.getElementById("arrowRight");
+let movUp = document.getElementById("arrowUp");
+let movDown = document.getElementById("arrowDown");
+
 const CANVAS = document.getElementById("tetris"); /* paso 3: se trae el canvas de html */
 const CONTEXT = CANVAS.getContext("2d"); /* paso 4: Se crea una variable que establezca la visualización del canvas en 2d  */
 
@@ -34,9 +39,9 @@ const player ={/*objeto llave y valor  pos abarca la posicion donde se ubica el 
     lines:0   
 };
 
-CONTEXT.scale(25,25); /*paso 5: Se establecen las dimensiones del tablero canvas teniendo en cuenta el height y el weight del html  */
+CONTEXT.scale(30,30); /*paso 5: Se establecen las dimensiones del tablero canvas teniendo en cuenta el height y el weight del html  */
 
-contextNext.scale (19,19); // Escala del canvas para la visualización de la siguiente ficha que va a salir. 
+contextNext.scale (40,40); // Escala del canvas para la visualización de la siguiente ficha que va a salir. 
 
 
 function createPiece (tipo){
@@ -136,21 +141,21 @@ function drawMatriz (matriz, offset) {/*Esta funcion trabaja con los parametros 
 
                 CONTEXT.fillStyle = colors[value];/*define los colores dependiendo la variable de colors al inicio ⏫. Por medio del metodo fillstyle, se le da un valor que va a sustraer de la lista de colores y lo va a aplicar  */
 
-                CONTEXT.fillRect (x + offset.x, y + offset.y, 1, 1 ); /*se utiliza el metodo fill rect () de canvas que recibe 4 parametros, el primero y el segundo se encargan de definir la posición donde se va a pintar en el linzo o canva y los segundos dos se encargan de los tamaños en eje x y eje y. Recordemos que las posiciones e definieron en una cuadricula de 10x 20 enntonces se va a desplazar por eje x y y para pintarlas */
+                CONTEXT.fillRect (x + offset.x, y + offset.y, 0.9, 0.9 ); /*se utiliza el metodo fill rect () de canvas que recibe 4 parametros, el primero y el segundo se encargan de definir la posición donde se va a pintar en el linzo o canva y los segundos dos se encargan de los tamaños en eje x y eje y. Recordemos que las posiciones e definieron en una cuadricula de 10x 20 enntonces se va a desplazar por eje x y y para pintarlas */
             }
         });
     });
 }  
 
 function drawMatrizNext (matriz, offset) {//funcion para dibujar la matriz pequeña de la ficha siguiente
-    contextNext.fillStyle = "#000", //todo revisar color 
+    contextNext.fillStyle =  "#000" , //todo revisar color 
     contextNext.fillRect(0,0, canvasNext.width, canvasNext.height),
 
     matriz.forEach((row, y) => { 
         row.forEach((value, x) => { 
             if(value!==0){
                 contextNext.fillStyle = colors[value];
-                contextNext.fillRect (x + offset.x, y + offset.y, 1, 1 ); 
+                contextNext.fillRect (x + offset.x, y + offset.y, 0.9, 0.9 ); 
             }
         });
     });
@@ -188,8 +193,7 @@ function gridSweep () {//Funcion que elimina las lineas completadas
             
             if (player.lines % 3===0){
                 player.level++;
-            }    
-
+            }              
         }
 }
 
@@ -198,6 +202,10 @@ function updateScore () {
     document.getElementById("level").innerHTML = player.level;
     document.getElementById("lines").innerHTML = player.lines;
 }
+
+
+
+
 
 function update(time = 0) {/*paso 8: Se crea una función que se ejecute para inicializar el juego */
 
@@ -219,12 +227,11 @@ function playerDrop(){
     player.pos.y++; //aumenta la posicion en el eje y 
     if (collide(grid, player)){
         player.pos.y--; //contador en negativo para que la ficha baje automática. 
-        
         merge(grid, player); //llama funcion con los parametros de posicion d ejugador y ficha
-        playerReset(); //funcion creada para lanzar una nueva ficha 
+        
+        /* playerReset(); */ //funcion creada para lanzar una nueva ficha
         gridSweep ();
         updateScore();      
-
     }
 
     dropCounter =0; // se formatea a cero para que avance solo de a una casilla, si dejaramos sin redefinir la variable, el contador avanzaria alamacenando la variable
@@ -243,7 +250,7 @@ function playerReset () { //funcion creada para enviar un nueva ficha cuando la 
         player.matriz = player.next;
     }
 
-    player.next = createPiece(pieces [Math.floor(Math.random() * 6)]); //ficha aleatoria generada por funciones. Al final se multiplica por 6 ya que es el numero de fichas que contiene la lista
+    player.next = createPiece(pieces [Math.floor(Math.random() * 7)]); //ficha aleatoria generada por funciones. Al final se multiplica por 6 ya que es el numero de fichas que contiene la lista
     player.pos.x = Math.floor(grid[0].length/3);    
 
     player.pos.y = 0;
@@ -251,8 +258,7 @@ function playerReset () { //funcion creada para enviar un nueva ficha cuando la 
     
     if (collide(grid,player)){//todo qué funcionalidad se necesita para que salga un alert y seleccione si desea continuar
         //cuando pierde 
-        alert ("has perdido");
-        
+        alert ("has perdido");        
         grid.forEach(row => row.fill(0));
         player.score =0;
         player.level = 0;
@@ -260,6 +266,8 @@ function playerReset () { //funcion creada para enviar un nueva ficha cuando la 
         updateScore();      
     }
 }
+
+
 
 
 function playerMove (direction){ //se limita el movimiento 
@@ -300,7 +308,7 @@ function rotate (matriz){ //cambia la posicion de la ficha
 
 //cómo se vincula los movimientos de las teclas con el juego
 document.addEventListener("keydown", event => {
-    if (event.key=== "ArrowDown") { //por medio de condiciones se validara qué tecla pulsa el usuario y se le aumentará la posición en eje x y y 
+    if (event.key==="ArrowDown") { //por medio de condiciones se validara qué tecla pulsa el usuario y se le aumentará la posición en eje x y y 
         playerDrop();
     }else if (event.key=== "ArrowLeft"){
         playerMove(-1);
@@ -311,10 +319,26 @@ document.addEventListener("keydown", event => {
     }
 });
 
+
+movLeft.addEventListener("click", event => {
+    playerMove(-1);
+});
+movRight.addEventListener("click", event => {
+    playerMove(1);
+});
+movUp.addEventListener("click", event => {
+    playerRotate ();
+});
+movDown.addEventListener("click", event => {
+    playerDrop();
+});
+
+
+
+
+
 playerReset();
 updateScore (); 
-
-
 update();
 
 

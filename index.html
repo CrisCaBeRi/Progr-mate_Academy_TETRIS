@@ -12,27 +12,75 @@
 </head>
 
 <body>  
-  <div class="main_table">
-    
-    <div class="box_name">
-      <div class="main_name">
-        <span>T</span><span>e</span><span>t</span><span>r</span><span>i</span><span>s</span>
-      </div>
-      <p>By Dany & Criss</p>  
+  <div class="main_table"> 
+
+    <div class="next_piece">
+      <h1>Next</h1>
+      <canvas id="nextPiece" width="200" height="200"></canvas>
+    </div>    
+
+    <div class="box_name"> 
+      <div class="tetris_words">
+        <span>T</span><span>e</span><span>t</span><span>r</span><span>i</span><span>s</span> 
+      </div>            
+      <p>By Dany & Criss</p>
+      <canvas id="tetris" width="300" height="600"></canvas> <!-- Paso 1: se crea el canvas, paso 2 se crea archivo Js-->   
     </div>
-    <canvas id="tetris" width="250" height="500"></canvas> <!-- Paso 1: se crea el canvas, paso 2 se crea archivo Js--> 
+
+    <div class="score_table">
+      <h1>Score </h1>
+      <div id="score"></div>  
+      <h1>Lines </h1>
+      <div id="lines"></div>
+      <h1>Level </h1>
+      <div id="level"></div>
+      
+      <div id="record"></div>
+
+      <div class="controls">
+        <h1>Controles</h1>
+      </div>
+      
+      <div class="arrows">
+
+        <div class="arrow_left">
+          <button id="arrowLeft">
+            <img src="./Assets/ArrowLeft.svg" alt="imagen flecha izquierda"  width="80px" height="80px">
+          </button>          
+        </div>
+
+        <div class="arrow_up">
+          <button id="arrowUp">
+            <img src="./Assets/ArrowUp.svg" alt="imagen flecha arriba"  width="80px" height="80px">
+          </button>
+          
+        </div>
+
+        <div class="arrow_down">
+          <button id="arrowDown">
+            <img src="./Assets/ArrowDown.svg" alt="imagen flecha abajo"  width="80px" height="80px">
+          </button>
+          
+        </div>
+
+        <div class="arrow_right">
+          <button id="arrowRight">
+            <img src="./Assets/ArrowRight.svg" alt="imagen flecha derecha"  width="80px" height="80px">
+          </button>    
+        </div>
+      </div>     
+    </div>
+
+    
+    
 </div>
 
-  <div class="score_table">
-    <h1>Score 🛒</h1>
-    <div id="score"></div>   
-  </div>
   
   
-  <div id="lines"></div>
-  <div id="level"></div>
+  
+  
 
-  <canvas id="nextPiece" width="100" height="100"></canvas>
+ 
 
   
 
