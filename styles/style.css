@@ -159,7 +159,7 @@ body {
         margin-top: 450px;
     }
     #valoresD{
-        margin-top: 10px;
+        margin-top: 25px;
         display: flex;
         flex-direction: row;
     }
@@ -206,6 +206,9 @@ body {
     }
     .arrow_down{
         grid-row:1/1;
+    }
+    .controls{
+        margin-top:20px;
     }
 }
 @media screen and (max-width: 760px){
