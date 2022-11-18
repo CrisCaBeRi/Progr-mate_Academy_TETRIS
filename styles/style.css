@@ -156,8 +156,20 @@ body {
     }
 
     .score_table{
-        flex-direction: column; 
-        align-items: center;      
+        margin-top: 450px;
+    }
+    #valoresD{
+        margin-top: 10px;
+        display: flex;
+        flex-direction: row;
+    }
+    #valoresD h1{
+        font-size: 37px;
+        margin-left: 5px;
+    }
+    #score, #lines, #level {    
+        font-size: 37px;
+        margin-left: 5px;
     }
     #tetris{
         width: 290px !important;
