@@ -189,6 +189,24 @@ body {
         width: 100px;
         height: 200px;
     }  
+    .arrows{
+    grid-template-columns: repeat(4,80px);
+    grid-template-rows: repeat(1,80px)!important;
+    }
+    .arrow_right {
+        grid-row:1/1;
+        grid-column:4/4;
+    }
+    .arrow_up{
+        grid-row:1/1;
+        grid-column:3/4;
+    }
+    .arrow_left{
+        grid-row:1/1;
+    }
+    .arrow_down{
+        grid-row:1/1;
+    }
 }
 @media screen and (max-width: 760px){
     .box_name {
