@@ -135,8 +135,7 @@ body {
 } */
 
 
-@media screen and (max-width: 860px){
-    
+@media screen and (max-width: 860px){ 
     
     .box_name {
         width: 100px;
@@ -155,4 +154,18 @@ body {
         width: 100px;
         height: 200px;
     }   
+}
+
+@media screen and (max-width: 420px){
+    #nextPiece {
+        width: 50px;
+        height: 50px;
+    }
+
+    #tetris {
+        width: 100px;
+        height: 200px;
+    }   
+
+    
 }

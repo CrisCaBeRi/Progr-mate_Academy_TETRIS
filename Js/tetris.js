@@ -15,19 +15,26 @@ const CONTEXT = CANVAS.getContext("2d"); /* paso 4: Se crea una variable que est
 const canvasNext = document.getElementById("nextPiece");
 const contextNext = canvasNext.getContext("2d");
 
-const grid = createMatriz(10,20);/*Variable // funciona aninima para crear una tabla de 20 filas por 10 columnas -- se utilizan los valores de create matriz 10,20 como parametro en la funcion createMatriz */
+const grid = createMatriz(10,20);/*Variable // funcion aninima para crear una tabla de 20 filas por 10 columnas -- se utilizan los valores de create matriz 10,20 como parametro en la funcion createMatriz */
 
-const color1= "rgb(255,255,0)"; // TODO DEFINIR COLORES DE LAS DEMAS PIEZAS 
+const color1= "rgb(153,153,153)"; // TODO DEFINIR COLORES DE LAS DEMAS PIEZAS 
+const color2= "rgb(255,255,255)";
+const color3= "rgb(255,255,0)";
+const color4= "rgb(255,0,255)";
+const color5= "rgb(255,0,0)";
+const color6= "rgb(0,0,255)";
+const color7= "rgb(0,255,0)";
+
 
 const colors = [ // variable para definir los colores, después se cita en draw matriz 
     null, //Ya que el 0 esta reservado a las posiciones nulas de la tabla, se asigna valor null a 0  
     color1,
-    color1,
-    color1,
-    color1,
-    'purple',
-    'orange',
-    'pink'
+    color2, 
+    color3,
+    color4, 
+    color5, 
+    color6,
+    color7 
 ];
 
 const player ={/*objeto llave y valor  pos abarca la posicion donde se ubica el tetromino*/
@@ -91,8 +98,9 @@ function createPiece (tipo){
     }      
 }
 
+//crear tabla donde se almacena la información
 
-function createMatriz (width,height){/*se crea una funcion que trae como parametros los vbalores de la variable definida al comienzo */
+function createMatriz (width,height){/*se crea una funcion que trae como parametros los valores de la variable definida al comienzo */
     const matriz = [];/*se crea un array en blanco  */
     while (height--){/*height corresponde a 20, recordar que los numeros siempre van a ser un operador bnoleano  TRUE si se pasan como unico parametro dentro del condicional se va a ejecturar, por ende, 20 veces se imprime un array en la posición width o la fila con #0  */
         matriz.push(new Array (width).fill(0));
@@ -121,7 +129,8 @@ function collide (grid, player){ //funcion para limitar los movimientos dentro d
     return false; //retorna que no hay colision 
 }
 
-function merge (grid,player) { //funcion creada para que ua ficha no pase por encima de otra sino que se agrupen
+//Limite entre piezas, para que una ficha no pase por encima de otra sino que se agrupen
+function merge (grid,player) {
     player.matriz.forEach((row, y) => {
         row.forEach((value, x) => {
             if (value!==0) {
@@ -130,6 +139,7 @@ function merge (grid,player) { //funcion creada para que ua ficha no pase por en
         });
     });      
 }
+
 
 function drawMatriz (matriz, offset) {/*Esta funcion trabaja con los parametros definidos dentro de la funcion draw  */
     /*array function funciona para abreviar la declaracion de una funcion y no poner las palabras reservadas de de las funciones como el function o el return*/
@@ -147,10 +157,10 @@ function drawMatriz (matriz, offset) {/*Esta funcion trabaja con los parametros 
     });
 }  
 
+
 function drawMatrizNext (matriz, offset) {//funcion para dibujar la matriz pequeña de la ficha siguiente
     contextNext.fillStyle =  "#000" , //todo revisar color 
     contextNext.fillRect(0,0, canvasNext.width, canvasNext.height),
-
     matriz.forEach((row, y) => { 
         row.forEach((value, x) => { 
             if(value!==0){
@@ -160,7 +170,8 @@ function drawMatrizNext (matriz, offset) {//funcion para dibujar la matriz peque
         });
     });
 }        
-        
+   
+
 function draw () { /*Se crea la función draw que va a ser llamada dentro de update para no saturar la función update con demasiada información  */
     CONTEXT.fillStyle ="#000";    
 
@@ -172,12 +183,8 @@ function draw () { /*Se crea la función draw que va a ser llamada dentro de upd
 }
 
 function gridSweep () {//Funcion que elimina las lineas completadas 
-    
-    
     outer: for (let y = grid.length -1; y >0; --y){
-
-            for (let x = 0; x < grid [y].length; ++x){
-                
+            for (let x = 0; x < grid [y].length; ++x){                
                 if (grid [y][x]===0){
                     continue outer; //label para ciclos, funciona para recorrer constantemente un posición 
                 }                
@@ -203,17 +210,11 @@ function updateScore () {
     document.getElementById("lines").innerHTML = player.lines;
 }
 
-
-
-
-
-function update(time = 0) {/*paso 8: Se crea una función que se ejecute para inicializar el juego */
-
+function update(time = 0) {//Se crea una función que se ejecute para inicializar el juego.
     const deltaTime = time - lastTime;/* paso 9: se declara una variable constante que juegue con los parametros de ingreso de update y se declara una variable global lasttime⏫*/
-    lastTime = time;  
-
+    lastTime = time;
     /*¿CÓMO SE MUEVE LA FICHA? */
-    dropCounter += deltaTime; //despues de definir la variable dropcounter arriba, se genera una oparción que se repetirá siempre debido al request animation de abajo⏬
+    dropCounter += deltaTime; //despues de definir la variable dropcounter arriba, se genera una operación que se repetirá siempre debido al request animation de abajo⏬
 
     if (dropCounter > dropInterval) { //¿cómo funciona este if ? porque dropcounter nunca es mayor que dropinterval y se sigue ejecutando siempre 
         playerDrop(); /*Funcion que  contiene la operacion para hacer que el tetramino baje cada intervalo de tiempo por el request animation */
@@ -229,7 +230,7 @@ function playerDrop(){
         player.pos.y--; //contador en negativo para que la ficha baje automática. 
         merge(grid, player); //llama funcion con los parametros de posicion d ejugador y ficha
         
-        /* playerReset(); */ //funcion creada para lanzar una nueva ficha
+        playerReset(); //funcion creada para lanzar una nueva ficha
         gridSweep ();
         updateScore();      
     }
@@ -268,8 +269,6 @@ function playerReset () { //funcion creada para enviar un nueva ficha cuando la 
 }
 
 
-
-
 function playerMove (direction){ //se limita el movimiento 
     player.pos.x += direction; // 
     if (collide(grid,player)){ //si colisiona 
@@ -304,8 +303,6 @@ function rotate (matriz){ //cambia la posicion de la ficha
 }
 
 
-
-
 //cómo se vincula los movimientos de las teclas con el juego
 document.addEventListener("keydown", event => {
     if (event.key==="ArrowDown") { //por medio de condiciones se validara qué tecla pulsa el usuario y se le aumentará la posición en eje x y y 
@@ -319,7 +316,6 @@ document.addEventListener("keydown", event => {
     }
 });
 
-
 movLeft.addEventListener("click", event => {
     playerMove(-1);
 });
@@ -332,10 +328,6 @@ movUp.addEventListener("click", event => {
 movDown.addEventListener("click", event => {
     playerDrop();
 });
-
-
-
-
 
 playerReset();
 updateScore (); 
