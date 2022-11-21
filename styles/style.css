@@ -139,16 +139,18 @@ body {
     .main_table{
         margin-top: 0px;
         flex-direction: column;
-
     }
+    
     .tetris_words span{
         font-size: 35px;
     }
+    
     p{
         font-size: 14px;
     }
+    
     .box_name {
-        width:230px !important;
+        width:300px !important;
         height: 94px;
         display: flex;
         flex-direction: column;  
@@ -156,7 +158,7 @@ body {
     }
 
     .score_table{
-        margin-top: 90px;
+        margin-top: 110px;
     }
     #valoresD{
         margin-top: 215px;
@@ -176,8 +178,8 @@ body {
         margin-bottom: 2px;
     }
     #tetris{
-        width: 230px !important;
-        height: 350px !important;
+        width: 300px !important;
+        height: 600px !important;
     }
 
     .next_piece {
@@ -232,7 +234,6 @@ body {
         display: flex;
         flex-direction: column;  
         align-self: center;  
-    
     }
 
     .score_table{
