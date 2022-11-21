@@ -1,6 +1,6 @@
 let lastTime = 0;/*paso 9: la variable creada se inicializa en 0 */
 
-let dropInterval = 1000;//variable para regular la caída de la ficha 
+let dropInterval = 1000;//variable for regular la caída de la ficha 
 let dropCounter= 0; //variable para regular la caída de la ficha
 
 
