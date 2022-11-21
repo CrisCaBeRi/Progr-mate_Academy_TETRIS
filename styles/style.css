@@ -100,7 +100,7 @@ body {
     display: grid; 
     /* justify-items: center;/*toma los elementos contenidos y los centra*/
     /*  align-items: center; */ 
-   place-items: center;
+    place-items: center;
 
     grid-template-columns: repeat(3,100px);
     grid-template-rows: repeat(2,100px);
@@ -126,7 +126,10 @@ body {
     grid-column: 3/3;
     grid-row: 2/2;
 }
-
+.imagenD{
+    width: 80px;
+    height: 80px;
+}
 /* #score::before{
     content: "site";
     margin-right: 150px;
@@ -139,14 +142,13 @@ body {
 
     }
     .tetris_words span{
-        font-size: 50px;
+        font-size: 35px;
     }
     p{
-        font-size: 18px;
+        font-size: 14px;
     }
     .box_name {
-
-        width:290px !important;
+        width:230px !important;
         height: 94px;
         display: flex;
         flex-direction: column;  
@@ -154,24 +156,28 @@ body {
     }
 
     .score_table{
-        margin-top: 490px;
+        margin-top: 90px;
     }
     #valoresD{
-        margin-top: 25px;
+        margin-top: 215px;
         display: flex;
         flex-direction: row;
     }
     #valoresD h1{
-        font-size: 37px;
+        font-size: 18px;
         margin-left: 5px;
+    }
+    .controls h1{
+        font-size: 18px;
     }
     #score, #lines, #level {    
-        font-size: 37px;
+        font-size: 20px;
         margin-left: 5px;
+        margin-bottom: 2px;
     }
     #tetris{
-        width: 290px !important;
-        height: 640px !important;
+        width: 230px !important;
+        height: 350px !important;
     }
 
     .next_piece {
@@ -179,12 +185,12 @@ body {
     }
 
     #tetris {
-        width: 100px;
-        height: 200px;
+        width: 80px;
+        height: 40px;
     }  
     .arrows{
-    grid-template-columns: repeat(4,80px);
-    grid-template-rows: repeat(1,80px)!important;
+    grid-template-columns: repeat(4,40px);
+    grid-template-rows: repeat(1,40px)!important;
     }
     .arrow_right {
         grid-row:1/1;
@@ -201,7 +207,11 @@ body {
         grid-row:1/1;
     }
     .controls{
-        margin-top:20px;
+        margin-top:0px;
+    }
+    .imagenD{
+        width: 40px;
+        height: 40px;
     }
 }
 @media screen and (min-width: 641px) and (max-width: 778px){
@@ -262,13 +272,14 @@ body {
         width: 100px;
         height: 200px;
     }  
-    .controls{
-
-    }
     .arrows{
     margin-top: 10px;
-    grid-template-columns: repeat(4,80px);
-    grid-template-rows: repeat(1,80px)!important;
+    grid-template-columns: repeat(4,40px);
+    grid-template-rows: repeat(1,40px)!important;
+    }
+    img[Attributes Style]{
+        width: 40px !important;
+        height: 40px !important;
     }
     .arrow_right {
         grid-row:1/1;
