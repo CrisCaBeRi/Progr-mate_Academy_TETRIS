@@ -214,21 +214,19 @@ body {
         height: 40px;
     }
 }
-@media screen and (min-width: 641px) and (max-width: 778px){
+@media screen and (max-width: 778px){
     .main_table{
         margin-top: 0px;
         flex-direction: column;
-        align-items: center;
-
     }
     .tetris_words span{
-        font-size: 125px;
+        font-size: 90px;
     }
     p{
-        font-size: 35px;
+        font-size: 30px;
     }
     .box_name {
-
+        margin-top: -120px;
         width:450px !important;
         height: 200px;
         display: flex;
@@ -238,7 +236,7 @@ body {
     }
 
     .score_table{
-        margin-top: 800px;
+        margin-top: 630px;
                 
     }
     #valoresD{
@@ -256,30 +254,26 @@ body {
     }
     #tetris{
         
-        width: 450px !important;
-        height: 800px !important;
-    }
-
-    .next_piece {
-        display:none;
+        width:450px !important;
+        height: 700px !important;
     }
     #nextPiece {
-        width: 100px;
-        height: 110px;
+        width: 50px;
+        height: 60px;
     }
-
-    #tetris {
-        width: 100px;
-        height: 200px;
-    }  
+    .next_piece{
+        width: 90px;
+        height: 120px;
+        align-self:left;
+    }
     .arrows{
-    margin-top: 10px;
-    grid-template-columns: repeat(4,40px);
-    grid-template-rows: repeat(1,40px)!important;
+    margin-top: 20px;
+    grid-template-columns: repeat(4,80px);
+    grid-template-rows: repeat(1,80px)!important;
     }
-    img[Attributes Style]{
-        width: 40px !important;
-        height: 40px !important;
+    .imagenD{
+        width: 80px;
+        height: 80px;
     }
     .arrow_right {
         grid-row:1/1;
@@ -296,6 +290,6 @@ body {
         grid-row:1/1;
     }
     .controls{
-        margin-top:20px;
+        margin-top:10px;
     }
 }
