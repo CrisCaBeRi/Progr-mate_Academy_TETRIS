@@ -17,17 +17,26 @@ const contextNext = canvasNext.getContext("2d");
 
 const grid = createMatriz(10,20);/*Variable // Animated function to create a table of 20 rows for ten columns -- the values 10,20 are used as parameters in the createMatriz */
 
-const color1= "rgb(255,255,0)"; // Define one unic color for all de tokens (TODO give to each token a color) 
+
+
+const color1= "rgb(153,153,153)"; // Define the colors for all de tokens
+const color2= "rgb(255,255,255)";
+const color3= "rgb(255,255,0)";
+const color4= "rgb(255,0,255)";
+const color5= "rgb(255,0,0)";
+const color6= "rgb(0,0,255)";
+const color7= "rgb(0,255,0)";
+
 
 const colors = [ // This is a variable to define the colors, it is used in the array draw matriz 
-    null, //We want make this value null because we want to start from 1 and not from 0
+    null, //We want make this value null because we want to start from 1 and not from 0  
     color1,
-    color1,
-    color1,
-    color1,
-    'purple',
-    'orange',
-    'pink'
+    color2, 
+    color3,
+    color4, 
+    color5, 
+    color6,
+    color7 
 ];
 
 const player ={/*The objet "player" have a key and a value named pos that has the position where the tetromino is alocated*/
@@ -93,34 +102,34 @@ function createPiece (tipo){
 //Create the canvas  with values of width y height tha will be specified then
 function createMatriz (width,height){/*We create a function that brings as parameters the values of the variable definited to the beginning*/
     const matriz = [];/*We create an empty array */
-    while (height--){/*height is 20, remember that the numbers always will be a no boolean operator recordar que los numeros siempre van a ser un operador bnoleano  TRUE si se pasan como unico parametro dentro del condicional se va a ejecturar, por ende, 20 veces se imprime un array en la posición width o la fila con #0  */
+    while (height--){/*height is 20, remember that the numbers always will be a TRUE boolean operator if there is only an unic parameter inside of the conditional will be executed */
         matriz.push(new Array (width).fill(0));
     }
-    console.table(matriz) /*Se imprime una tabla .table que muestre la matriz del comienzo que se ha modificado por medio del while  */
-    return matriz; /*Se devuelve la matriz en forma de tabla ⏫ */
+    console.table(matriz) /*A .table is printed showing the array from the start that has been modified by the while  */
+    return matriz; /*The array is returned in the form of a table ⏫ */
 }
-/*recibe el grid por l matriz y el player tiene la matriz de lka ficha */
+/*receives the grid by the matrix and the player has the matrix of the tile */
 
 
-//función para colisiones entre la pieza y los bordes del tablero u otra pieza
-function collide (grid, player){ //funcion para limitar los movimientos dentro del canvas para que las figuras no superen los limites INFERIORES
+//function for collisions between the piece and the lower limets of the board
+function collide (grid, player){ 
 
-    const matriz = player.matriz; //Variable definida para obtener la ruta de acceso directo a la lisya del objeto
-    const offset = player.pos; // Variable definida para obtener la ruta de acceso directo a la lista del objeto
+    const matriz = player.matriz; //Variable defined to get the shortcut path to the list of the object
+    const offset = player.pos; // Variable defined to get the shortcut path to the list of the object
 
-    for (let y =0; y < matriz.length; ++y) {//se repite 3 vveces 
-// recorre la pieza vertical y horizontal buscando que las posiciones 
+    for (let y =0; y < matriz.length; ++y) {//Repeats 3 times 
+// runs through the vertical and horizontal piece looking for the positions 
         for (let x=0; x < matriz[y].length; ++x ) { 
 
             if (matriz[y][x] !==0 && (grid[y + offset.y] && grid[y + offset.y][x+offset.x]) !==0) {//comprobar colisiones en el grid 
-                return true;//retorna que colisiono 
+                return true;//returns what collided
             }
         }
     }
-    return false; //retorna que no hay colision 
+    return false; //returns that there is no collision
 }
-//función para colisiones entre la pieza y otra pieza
-function merge (grid,player) { //funcion creada para que ua ficha no pase por encima de otra sino que se agrupen
+//function for collisions between the token and another token
+function merge (grid,player) { //function created so that a tile does not pass over another but rather they are grouped
     player.matriz.forEach((row, y) => {
         row.forEach((value, x) => {
             if (value!==0) {
@@ -129,25 +138,25 @@ function merge (grid,player) { //funcion creada para que ua ficha no pase por en
         });
     });      
 }
-//dibuja la matriz, para mostrarla en el canvas
-function drawMatriz (matriz, offset) {/*Esta funcion trabaja con los parametros definidos dentro de la funcion draw  */
-    /*array function funciona para abreviar la declaracion de una funcion y no poner las palabras reservadas de de las funciones como el function o el return*/
-    matriz.forEach((row, y) => { /* el primer for each recibe dos parametros creados momentaneamente encargados de:  (row| se encarga de alamacenar los elementos de la lista matriz [0,0,0],[1,1,1],[0,1,0]) (y| se encarga de almacenar la posicion del elemento dentro de la lista:  # 0 -posicion- [0,0,0], # 1 [1,1,1], #2 [0,1,0]) */
+//draw the matrix, to display it on the canvas
+function drawMatriz (matriz, offset) {/*This function works with the parameters defined inside the draw function*/
+    /*array function It works to shorten the declaration of a function and not to put the reserved words of the functions like the function or the return*/
+    matriz.forEach((row, y) => { /* The first for each receives two momentarily created parameters in charge of:  (row| is responsible for storing the elements of the matrix list [0,0,0],[1,1,1],[0,1,0]) (y| it is responsible for storing the position of the element within the list:  # 0 -posicion- [0,0,0], # 1 [1,1,1], #2 [0,1,0]) */
 
-        row.forEach((value, x) => { /* ahora se toma row| que ya alamcenó los elementos del array matriz, por ende, este .foreach abre cada lista y recorre el elemento en especifico de cada lista, es decir accede directamente a los numeros  */
+        row.forEach((value, x) => { /* NOw we take row| which has already stored the elements of the matrix array, therefore, this .foreach opens each list and goes through the specific element of each list, that is, it directly accesses the numbers */
 
-            if(value!==0){/*una vez dentro de los numeros, aplica el condicional y si es diferente de 0 ⏬ */
+            if(value!==0){/*once inside the numbers, apply the conditional and if it is different from 0 ⏬ */
 
-                CONTEXT.fillStyle = colors[value];/*define los colores dependiendo la variable de colors al inicio ⏫. Por medio del metodo fillstyle, se le da un valor que va a sustraer de la lista de colores y lo va a aplicar  */
+                CONTEXT.fillStyle = colors[value];/*defines the colors depending on the colors variable at the beginning ⏫. Whit the fillstyle method, it is given a value that it will subtract from the list of colors and apply  */
 
-                CONTEXT.fillRect (x + offset.x, y + offset.y, 0.9, 0.9 ); /*se utiliza el metodo fill rect () de canvas que recibe 4 parametros, el primero y el segundo se encargan de definir la posición donde se va a pintar en el linzo o canva y los segundos dos se encargan de los tamaños en eje x y eje y. Recordemos que las posiciones e definieron en una cuadricula de 10x 20 enntonces se va a desplazar por eje x y y para pintarlas */
+                CONTEXT.fillRect (x + offset.x, y + offset.y, 0.9, 0.9 ); /*The  fill rect () method  of canvas recives parameters, the first and the second are in charge of defining the position where it is going to be painted in the linzo or canvas and the second two are in charge of the sizes in axis x and axis y. Let's remember that the positions e were defined in a 10x20 grid, so we are going to move along the x and y axis to paint them*/
             }
         });
     });
 }  
 
-function drawMatrizNext (matriz, offset) {//funcion para dibujar la matriz pequeña de la ficha siguiente
-    contextNext.fillStyle =  "#000" , //todo revisar color 
+function drawMatrizNext (matriz, offset) {//function to draw the small array of the next tile
+    contextNext.fillStyle =  "#000" , //TODO
     contextNext.fillRect(0,0, canvasNext.width, canvasNext.height),
 
     matriz.forEach((row, y) => { 
@@ -160,7 +169,7 @@ function drawMatrizNext (matriz, offset) {//funcion para dibujar la matriz peque
     });
 }        
         
-function draw () { /*Se crea la función draw que va a ser llamada dentro de update para no saturar la función update con demasiada información  */
+function draw () { /*Create the draw function that will be called inside update so as not to clutter the update function with too much information*/
     CONTEXT.fillStyle ="#000";    
 
     CONTEXT.fillRect(0, 0, CANVAS.width , CANVAS.height);
@@ -170,7 +179,7 @@ function draw () { /*Se crea la función draw que va a ser llamada dentro de upd
     drawMatrizNext(player.next, {x:1, y:1});
 }
 
-function gridSweep () {//Funcion que elimina las lineas completadas 
+function gridSweep () {//Function that removes completed lines
     
     
     outer: for (let y = grid.length -1; y >0; --y){
@@ -178,13 +187,13 @@ function gridSweep () {//Funcion que elimina las lineas completadas
             for (let x = 0; x < grid [y].length; ++x){
                 
                 if (grid [y][x]===0){
-                    continue outer; //label para ciclos, funciona para recorrer constantemente un posición 
+                    continue outer; //label for cycles, it works to constantly loop through a position
                 }                
             }
-            const row = grid.splice(y,1)[0].fill(0); // splice es un metodo de los arrays para verificar todas las posiciones de Y en 1, después .fill se encarga de cambiar esos 1 en 0. 
-            grid.unshift(row);//una vez la posición este en 0, unshift borra todo el row o fila correspondiente 
-            ++y;// como se borra la fila, se debe crear otra encima 
-            player.score += 1*10; // y cada vez que se borre, se opera el contador *10 
+            const row = grid.splice(y,1)[0].fill(0); // splice is a method of arrays to check all the positions of Y in 1, then .fill takes care of changing those 1 in 0
+            grid.unshift(row);//once the position is at 0, unshift deletes the entire row or corresponding row 
+            ++y;// as the row is deleted, another one must be created above it
+            player.score += 1*10; // and each time it is cleared, the counter *10 is operated
             
             player.lines ++;
 
@@ -195,7 +204,7 @@ function gridSweep () {//Funcion que elimina las lineas completadas
             }              
         }
 }
-//actualiza el puntaje
+//Update the score
 function updateScore () {
     document.getElementById("score").innerHTML = player.score;
     document.getElementById("level").innerHTML = player.level;
@@ -206,16 +215,16 @@ function updateScore () {
 
 
 
-function update(time = 0) {/* Se crea una función que se ejecute para inicializar el juego */
+function update(time = 0) {/* Create a function that runs to initialize the game */
 
-    const deltaTime = time - lastTime;/* se declara una variable constante que juegue con los parametros de ingreso de update y se declara una variable global lasttime⏫*/
+    const deltaTime = time - lastTime;/* declare a constant variable that plays with the input parameters of update and declare a global variable lasttime⏫*/
     lastTime = time;  
 
-    /*¿CÓMO SE MUEVE LA FICHA? */
-    dropCounter += deltaTime; //despues de definir la variable dropcounter arriba, se genera una operación que se repetirá siempre debido al request animation de abajo⏬
+    /*¿How to move a token? */
+    dropCounter += deltaTime; //after defining the dropcounter variable above, an operation is generated that will be repeated forever due to the request animation below⏬
 
-    if (dropCounter > dropInterval) { //¿cómo funciona este if ? porque dropcounter nunca es mayor que dropinterval y se sigue ejecutando siempre 
-        playerDrop(); /*Funcion que  contiene la operacion para hacer que el tetramino baje cada intervalo de tiempo por el request animation */
+    if (dropCounter > dropInterval) { //¿how works this if ? because dropcounter is never greater than dropinterval and always keeps running
+        playerDrop(); //Function that contains the operation to make the tetramino go down every time interval for the request animation
     }
     draw();
     requestAnimationFrame(update); /*Por medio de la funcion animation se vuelve a llamar update y el valor de time varia */
@@ -223,25 +232,24 @@ function update(time = 0) {/* Se crea una función que se ejecute para inicializ
 
 
 function playerDrop(){
-    player.pos.y++; //aumenta la posicion en el eje y 
+    player.pos.y++; //increase y position in the y axis 
     if (collide(grid, player)){
-        player.pos.y--; //contador en negativo para que la ficha baje automática. 
-        merge(grid, player); //llama funcion con los parametros de posicion d ejugador y ficha
+        player.pos.y--; //counter in negative so that the tab goes down automatically.
+        merge(grid, player); //call function with the position parameters of the player and token
         
-        playerReset(); //funcion creada para lanzar una nueva ficha
+        playerReset(); //function created to launch a new token
         gridSweep ();
         updateScore();      
     }
 
-    dropCounter =0; // se formatea a cero para que avance solo de a una casilla, si dejaramos sin redefinir la variable, el contador avanzaria alamacenando la variable
+    dropCounter =0; // it is formatted to zero so that it advances only one cell, if we left the variable without redefining, the counter would advance storing the variable
 }
 
-function playerReset () { //funcion creada para enviar un nueva ficha cuando la anterior colisiona 
+function playerReset () { //function created to send a new token when the previous one collides
 
     const pieces = 'IJLOSZT';
 
-    dropInterval = 1000 - (player.level*100); //cambio del intervalo de tiempo cada vez que se suba el nivel 
-    
+    dropInterval = 1000 - (player.level*100); //change the time interval every time you level up
     if (player.next === null){
 
         player.matriz = createPiece(pieces [Math.floor(Math.random() * 6)])
@@ -249,7 +257,7 @@ function playerReset () { //funcion creada para enviar un nueva ficha cuando la 
         player.matriz = player.next;
     }
 
-    player.next = createPiece(pieces [Math.floor(Math.random() * 7)]); //ficha aleatoria generada por funciones. Al final se multiplica por 6 ya que es el numero de fichas que contiene la lista
+    player.next = createPiece(pieces [Math.floor(Math.random() * 7)]); //random token generated by functions. At the end it is multiplied by 6 since it is the number of tiles that the list contains
     player.pos.x = Math.floor(grid[0].length/3);    
 
     player.pos.y = 0;
@@ -339,6 +347,4 @@ movDown.addEventListener("click", event => {
 playerReset();
 updateScore (); 
 update();
-
-
 
