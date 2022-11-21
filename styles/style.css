@@ -127,8 +127,6 @@ body {
     grid-row: 2/2;
 }
 
-
-
 /* #score::before{
     content: "site";
     margin-right: 150px;
@@ -156,7 +154,7 @@ body {
     }
 
     .score_table{
-        margin-top: 450px;
+        margin-top: 420px;
     }
     #valoresD{
         margin-top: 25px;
@@ -212,19 +210,92 @@ body {
     }
 }
 @media screen and (max-width: 760px){
+    .main_table{
+        margin-top: 0px;
+        flex-direction: column;
+
+    }
+    .tetris_words span{
+        font-size: 125px;
+    }
+    p{
+        font-size: 35px;
+    }
     .box_name {
-        width: 100px;
-        height: 150px;
+
+        width:450px !important;
+        height: 200px;
         display: flex;
-        flex-direction: column; 
-        align-items: center;           
+        flex-direction: column;  
+        align-self: center;  
+        margin-left: 150px;
+        margin-top: -165px;    
     }
 
+    .score_table{
+        margin-top: 450px;
+    }
+    #valoresD{
+        margin-top: -490px;
+        margin-right: 490px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+    }
+    #valoresD h1{
+        font-size: 50px;
+        margin-left: 5px;
+    }
+    #score, #lines, #level {    
+        font-size: 60px;
+        margin-left: 5px;
+    }
+    #tetris{
+        
+        width: 450px !important;
+        height: 800px !important;
+    }
+
+    .next_piece {
+
+        width: 165px;
+        height: 165px  
+    }
     #nextPiece {
-        width: 50px;
-        height: 50px;
+        width: 100px;
+        height: 110px;
     }
 
-
+    #tetris {
+        width: 100px;
+        height: 200px;
+    }  
+    .controls{
+        margin-top: 480px!important;
+        margin-left:200px!important;
+    }
+    .arrows{
+    margin-left:200px;
+    margin-top: 10px;
+    grid-template-columns: repeat(4,80px);
+    grid-template-rows: repeat(1,80px)!important;
+    }
+    .arrow_right {
+        grid-row:1/1;
+        grid-column:4/4;
+    }
+    .arrow_up{
+        grid-row:1/1;
+        grid-column:3/4;
+    }
+    .arrow_left{
+        grid-row:1/1;
+    }
+    .arrow_down{
+        grid-row:1/1;
+    }
+    .controls{
+        margin-top:20px;
+    }
 }
-
